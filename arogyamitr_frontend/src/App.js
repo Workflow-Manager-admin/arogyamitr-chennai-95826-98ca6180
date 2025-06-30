@@ -89,6 +89,9 @@ function ExpandableList({ title, items }) {
   );
 }
 
+/** Backend API configuration: edit only this line if backend URL changes */
+const BACKEND_API_BASE = "http://localhost:3001"; // <--- Change this as needed
+
 // Main App
 // PUBLIC_INTERFACE
 function App() {
@@ -98,6 +101,11 @@ function App() {
   const [theme, setTheme] = useState('light');
   // Example user information
   const [user, setUser] = useState({ name: "Akshaya", dosha: "Pitta-Kapha", city: "Chennai" });
+
+  // API test state
+  const [pingLoading, setPingLoading] = useState(false);
+  const [pingResult, setPingResult] = useState(null);
+  const [pingError, setPingError] = useState(null);
 
   // Demo: sample health dashboard data
   const demoMetrics = {
@@ -122,6 +130,21 @@ function App() {
   const eventList = [
     "Free Yoga Class @ Marina Beach", "Blood Donation Drive - T Nagar", "Nutritionist Camp (Anna Nagar)"
   ];
+
+  // PUBLIC_INTERFACE
+  function handlePingBackend() {
+    setPingLoading(true);
+    setPingResult(null);
+    setPingError(null);
+    fetch(`${BACKEND_API_BASE}/ping`)
+      .then(res => {
+        if (!res.ok) throw new Error('Non-200 HTTP: ' + res.status);
+        return res.json();
+      })
+      .then(data => setPingResult(data))
+      .catch(err => setPingError(err.message))
+      .finally(() => setPingLoading(false));
+  }
 
   // PUBLIC_INTERFACE
   function renderTabContent(tabKey) {
@@ -178,6 +201,40 @@ function App() {
                 description="Health events & resources"
                 onClick={() => setTab('events')}
               />
+              {/* API Test Card */}
+              <FeatureCard
+                icon={
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" fill="#e8fffa" stroke="#1bbc9b" strokeWidth="2"/>
+                    <path d="M9 12l2 2 4-4" stroke="#164d00" strokeWidth="2" fill="none"/>
+                  </svg>
+                }
+                title="Test API Connection"
+                description="Check backend connectivity (/ping)"
+              >
+                <div style={{marginTop: '6px'}}>
+                  <button
+                    className="primary-btn"
+                    style={{padding: "4px 14px", fontSize: "0.98em"}}
+                    onClick={handlePingBackend}
+                    disabled={pingLoading}
+                  >
+                    {pingLoading ? "Testing..." : "Ping Backend"}
+                  </button>
+                  {pingResult && (
+                    <div style={{color: "#164d00", marginTop: 6, fontSize: "0.97em"}}>
+                      {pingResult.status ? <b>✅ {pingResult.status}</b> : null}
+                      {" "}
+                      {pingResult.message}
+                    </div>
+                  )}
+                  {pingError && (
+                    <div style={{color: "#e87a41", marginTop: 6, fontSize: "0.97em"}}>
+                      <b>Connection Error:</b> {pingError}
+                    </div>
+                  )}
+                </div>
+              </FeatureCard>
             </div>
             <hr className="dashboard-hr"/>
             <div className="expandables">
