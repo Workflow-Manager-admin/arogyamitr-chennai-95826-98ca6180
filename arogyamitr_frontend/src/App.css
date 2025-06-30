@@ -1,104 +1,400 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --color-primary: #164d00;
+  --color-secondary: #c89c56;
+  --color-accent: #729ce4;
+  --color-alert: #e87a41;
+  --bg-main: #fff;
+  --bg-highlight: #f8f9fa;
+  --bg-section: #f5f5ee;
+  --bg-dashboard: #faf7f3;
+  --bg-card: #ffffff;
+  --bg-bottomnav: #edf1eb;
+  --text-main: #212521;
+  --text-secondary: #666;
+  --tab-active: #e8f7eb;
+  --border-soft: #e3e3cf;
+  --box-shadow: 0px 2px 8px 0px rgba(150, 160, 95, 0.08);
 }
 
 [data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+  --bg-main: #1f2423;
+  --text-main: #fff;
+  --text-secondary: #b2c1b2;
+  --color-primary: #b6e2d3;
+  --bg-highlight: #284832;
+  --bg-section: #28332c;
+  --bg-card: #24404d;
+  --bg-bottomnav: #1b2520;
+  --border-soft: #242d24;
+  --box-shadow: 0 1px 8px #0002;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+* {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body, html, #root {
+  padding: 0;
+  margin: 0;
+  background: var(--bg-main);
+  font-family: 'Segoe UI', 'Hind', 'Varela Round', 'Helvetica Neue', Arial, sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
+.am-root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: var(--bg-main);
+}
+
+/* Top Tab Navigation (main modules) */
+.top-tabs {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  background: var(--bg-dashboard);
+  border-bottom: 2px solid var(--border-soft);
+  height: 56px;
+  z-index: 60;
+  box-shadow: 0 4px 10px -9px #b9b38055;
+  padding-left: 6px;
+  position: sticky;
+  top: 0;
 }
-
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+.top-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 8px;
+  padding: 2px 4px 2px 4px;
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
+  outline: none;
+  background: transparent;
   font-weight: 600;
+  font-size: 13px;
+  color: var(--color-primary);
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.18s;
+  border-radius: 8px 8px 0 0;
+}
+.top-tab-btn.active {
+  background: var(--tab-active);
+  color: var(--color-secondary);
+  font-weight: 700;
+}
+.top-tab-icon {
+  margin-bottom: -4px;
+  display: block;
+  height: 24px;
+}
+.theme-toggle {
+  background: var(--color-accent);
+  border: none;
+  padding: 7px 14px;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: 2px;
+  font-size: 17px;
+  cursor: pointer;
+}
+.dashboard-header-spacer { flex: 1; }
+
+
+/* Main content area */
+.main-content {
+  padding: 16px 10vw;
+  flex: 1;
+  background: var(--bg-section);
+  min-height: 69vh;
+}
+@media (max-width: 850px) {
+  .main-content { padding: 14px 1vw; }
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+/* Dashboard Feature cards */
+.card-row, .metrics-row {
+  display: flex;
+  gap: 14px;
+  margin: 10px 0 10px 0;
+}
+.metrics-row {
+  justify-content: center;
+}
+.card-row {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.feature-card {
+  flex: 1 1 210px;
+  min-width: 175px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-soft);
+  border-radius: 18px;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  align-items: center;
+  padding: 14px 12px;
+  margin-bottom: 8px;
+  font-size: 0.99em;
+  cursor: pointer;
+  transition: box-shadow 0.15s, border 0.16s, background 0.18s;
+}
+.feature-card.highlight {
+  border-color: var(--color-accent);
+  box-shadow: 0px 6px 24px 0px #729ce411;
+  background: #e4f2fd;
+}
+.feature-card-icon {
+  margin-right: 14px;
+}
+.feature-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 3px;
+}
+.feature-desc {
+  font-size: 0.97em;
+  color: var(--text-secondary);
+}
+.feature-card:active, .feature-card:focus, .feature-card:hover {
+  box-shadow: 0 4px 14px #c89c5622;
+  border-color: var(--color-secondary);
+  background: var(--bg-highlight);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+/* Expandable lists */
+.expandables { margin-top: 20px;}
+.expandable-list {
+  margin-bottom: 11px;
+  background: var(--bg-card);
+  border-radius: 11px;
+  border: 1.1px solid var(--border-soft);
+  box-shadow: var(--box-shadow);
+}
+.expandable-list-header {
+  padding: 11px 17px;
+  cursor: pointer;
+  font-weight: 600;
+  background: #faf7e9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--color-primary);
+  border-radius: 11px 11px 0 0;
+  font-size: 1.06em;
+  outline: none;
+}
+.expandable-list-header:focus, .expandable-list-header:hover {
+  background: #f4eedf;
+}
+.expandable-list-body {
+  list-style: disc outside;
+  background: var(--bg-card);
+  margin: 0;
+  padding: 8px 20px 12px 33px;
+  color: var(--text-main);
+  border-radius: 0 0 11px 11px;
+}
+.expandable-list-body li {
+  margin: 2px 0;
+  font-size: 1em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Disease card grid */
+.disease-row, .metric-card-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+.disease-row .feature-card, .metric-card-row .feature-card {
+  min-width: 170px;
+  flex: 0 1 230px;
+  background: #fff4eb;
+  border-color: #e87a41bb;
+}
+.disease-row .feature-card:active, .disease-row .feature-card:hover {
+  background: #ffe7d2;
 }
 
-/* Responsive design for mobile */
+/* Dosha section */
+.dosha-info {
+  background: #fff8e1;
+  border-left: 4px solid #c89c56;
+  border-radius: 10px;
+  padding: 15px 19px;
+  font-size: 1.03em;
+  color: var(--color-primary);
+  max-width: 430px;
+  margin: 18px auto 8px auto;
+}
+.highlighted { color: #e87a41; font-weight:bold; }
+
+/* Scanner */
+.scan-demo {
+  margin: 13px auto 7px auto;
+  background: #f5f9fc;
+  border-radius: 7px;
+  padding: 10px 18px;
+  color: #729ce4;
+  border: 1.1px solid #d9e5f4;
+  max-width: 320px;
+}
+
+/* Gamification */
+.gamification {
+  margin: 11px auto 0 auto;
+  border-radius: 6px;
+  padding: 10px 22px;
+  background: #fffae0;
+  color: #807300;
+  max-width: 380px;
+}
+.gamification div {
+  font-size: 1.02em;
+  margin-bottom: 3px;
+}
+
+/* Emergency SOS */
+.sos-block {
+  margin: 17px auto 0 auto;
+  background: #fff4f0;
+  border: 2.5px solid #e87a41;
+  border-radius: 12px;
+  max-width: 390px;
+  padding: 17px 21px;
+  text-align: center;
+  color: #d53a0a;
+}
+.sos-btn {
+  font-size: 1.05em;
+}
+.sos-btn.primary-btn {
+  background: var(--color-alert);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 20px;
+  margin-right: 5px;
+}
+.sos-btn.secondary-btn {
+  background: #fff;
+  color: var(--color-alert);
+  border: 1.2px solid var(--color-alert);
+  border-radius: 6px;
+  padding: 7px 20px;
+  margin-right: 5px;
+}
+
+/* Shared Buttons */
+.primary-btn {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 8px 26px;
+  margin-top: 7px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1.08em;
+  line-height: 1.6;
+  cursor: pointer;
+  transition: background 0.13s, box-shadow 0.11s;
+  box-shadow: 0 3px 8px #164d0010;
+}
+.primary-btn:hover {
+  background: #265d18;
+}
+.secondary-btn {
+  background: #fff;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  border-radius: 6px;
+  padding: 8px 19px;
+  font-weight: 600;
+  margin-top: 7px;
+  font-size: 1.02em;
+  margin-left: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 7px #1a1a1a05;
+}
+.secondary-btn:hover {
+  background: #f5f9f4;
+}
+
+/* Responsive bottom navigation bar */
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  border-top: 2px solid var(--border-soft);
+  background: var(--bg-bottomnav);
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+  height: 56px;
+  box-shadow: 0px -2px 12px 0 rgba(0,0,0,0.04);
+}
+.tab-btn {
+  flex: 1 1 0px;
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: color 0.13s, background 0.11s;
+  padding: 6px 0 0 0;
+}
+.tab-btn.active, .tab-btn:focus {
+  color: var(--color-secondary);
+  background: var(--tab-active);
+}
+.tab-btn.tab-emergency {
+  color: #fff;
+  background: var(--color-alert);
+  border-radius: 10px;
+  margin: 0 3px;
+}
+.tab-label {
+  font-size: 11px;
+  margin-top: 1.5px;
+}
+
+hr.dashboard-hr {
+  margin: 25px 0 13px 0;
+  border: none;
+  border-bottom: 1.5px solid var(--border-soft);
+  width: 98%;
+}
+
+/* Footer */
+.copyright-footer {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.98em;
+  padding: 12px 0 6px 0;
+  background: var(--bg-dashboard);
+  border-top: 1.1px solid var(--border-soft);
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .main-content { padding: 13px 2vw; }
+  .feature-card, .disease-row .feature-card, .card-row .feature-card {
+    min-width: 130px;
+    font-size: 0.97em;
+    padding: 8px 5px;
   }
+  .card-row, .metrics-row, .disease-row, .metric-card-row { gap: 6px; }
+  .expandables { margin-top: 10px; }
+  .dosha-info { padding: 7px 7px; }
+}
+
+@media (max-width: 480px) {
+  .main-content { padding: 6px 1vw;}
+  .card-row, .metrics-row, .disease-row, .metric-card-row { flex-direction: column; }
+  .feature-card { min-width: unset; width: 100%; }
 }
