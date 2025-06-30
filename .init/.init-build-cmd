@@ -1,0 +1,4 @@
+{
+    "command": "npm install && npx tsc --noEmit && npm test -- --ci",
+    "working_directory": "/home/kavia/workspace/code-generation/arogyamitr-chennai-95826-98ca6180/arogyamitr_frontend"
+}
