@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import axios from 'axios';
 
 // --- Icon SVGs (simple, culturally-inspired flavor) ---
 const icons = {
